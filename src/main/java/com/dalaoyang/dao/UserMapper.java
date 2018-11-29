@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    List<User> getUserList();
+    List<User> getUserList(Long id);
 
 
 }

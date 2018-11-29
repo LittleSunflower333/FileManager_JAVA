@@ -15,15 +15,6 @@ public class User {
     private String user_name;
     private String password;
     private String createBy;
-    private Date createDate;
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 
     public String getCreateBy() {
         return createBy;

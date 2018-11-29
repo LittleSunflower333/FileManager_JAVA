@@ -24,10 +24,7 @@ import javax.jws.soap.SOAPBinding;
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author dalaoyang
@@ -50,8 +47,6 @@ public class UserController {
     @RequestMapping(value = "/createUser",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResObject createUser(@RequestBody User user) throws Exception {
          user.setCreateBy("admin");
-         user.setCreateDate(new Date());
-         System.out.println(user.getCreateDate()+"''''''''''''''''''''''''''");
         if(user.getPassword() =="" || user.getPassword()==null ) {
             throw new Exception("密码不能为空");
         } if(user.getUser_name()=="" || user.getUser_name()==null){
@@ -86,9 +81,13 @@ public class UserController {
     })
     @RequestMapping(value="/queryUser",method=RequestMethod.GET)
     public ResObject queryUser(@RequestParam("id") Long id){
-        System.out.println("queryUser:::"+id);
-        User user = new User("test","123456");
-        userSerivce.updateById(user);
-        return new ResObject(HttpStatus.OK.value(), user);
+        List<User> usersList= userSerivce.getUserList(id);
+        if(usersList!=null && usersList.size()>0){
+            for(User users:usersList){
+                usersList.get(0).getId();
+            }
+        }
+
+        return new ResObject(HttpStatus.OK.value(), usersList);
     }
 }

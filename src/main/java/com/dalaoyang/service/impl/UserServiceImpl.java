@@ -25,7 +25,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<User> getUserList() {
-        return userMapper.getUserList();
+    public List<User> getUserList(Long id) {
+        return userMapper.getUserList(id);
     }
 }
