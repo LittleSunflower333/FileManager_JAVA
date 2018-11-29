@@ -5,6 +5,8 @@ import com.dalaoyang.dao.UserMapper;
 import com.dalaoyang.entity.User;
 import com.dalaoyang.service.UserSerivce;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,6 +24,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<User> getUserList() {
         return userMapper.getUserList();
     }

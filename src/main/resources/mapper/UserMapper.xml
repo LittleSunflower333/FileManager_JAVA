@@ -5,6 +5,6 @@
     <parameterMap id="user" type="com.dalaoyang.entity.User"/>
 
     <select id="getUserList" resultMap="user">
-        SELECT  * FROM USER
+       SELECT  user_name,PASSWORD,createDate FROM USER WHERE 1=1
     </select>
 </mapper>

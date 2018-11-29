@@ -14,11 +14,17 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import sun.util.resources.ga.LocaleNames_ga;
 
 import javax.annotation.Resource;
 import javax.jws.soap.SOAPBinding;
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +45,20 @@ public class UserController {
     @Resource
     private UserSerivce userSerivce;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @ApiOperation(value = "新增用户",notes = "新增注册")
     @RequestMapping(value = "/createUser",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResObject createUser(@RequestBody User user){
-            userSerivce.insert(user);
-         System.out.println("createUser"+user.toString());
+    public ResObject createUser(@RequestBody User user) throws Exception {
+         user.setCreateBy("admin");
+         user.setCreateDate(new Date());
+         System.out.println(user.getCreateDate()+"''''''''''''''''''''''''''");
+        if(user.getPassword() =="" || user.getPassword()==null ) {
+            throw new Exception("密码不能为空");
+        } if(user.getUser_name()=="" || user.getUser_name()==null){
+            throw new Exception("用户名不能为空");
+        }
+        userSerivce.insert(user);
+        System.out.println("createUser" + user.toString());
         return new ResObject(HttpStatus.OK.value(),"新增成功");
     }
 

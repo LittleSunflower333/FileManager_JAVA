@@ -1,5 +1,7 @@
 package com.dalaoyang.entity;
 
+import java.util.Date;
+
 /**
  * @author dalaoyang
  * @Description
@@ -12,6 +14,24 @@ public class User {
     private Long id;
     private String user_name;
     private String password;
+    private String createBy;
+    private Date createDate;
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 
     public User() {
     }
