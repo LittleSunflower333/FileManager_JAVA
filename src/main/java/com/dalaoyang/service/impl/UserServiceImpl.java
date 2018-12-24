@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.dalaoyang.dao.UserMapper;
 import com.dalaoyang.entity.User;
 import com.dalaoyang.service.UserSerivce;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Override
+    @Cacheable(value = "getUserList")
     @Transactional(propagation = Propagation.REQUIRED)
     public List<User> getUserList(Long id) {
         return userMapper.getUserList(id);
