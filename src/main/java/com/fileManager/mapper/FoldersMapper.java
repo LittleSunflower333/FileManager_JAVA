@@ -1,7 +1,8 @@
 package com.fileManager.mapper;
 
-import com.fileManager.pojo.Folders;
+import com.fileManager.entity.Folders;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author zhangmy
  * @since 2024-12-10
  */
+@Mapper
 public interface FoldersMapper extends BaseMapper<Folders> {
 
 }

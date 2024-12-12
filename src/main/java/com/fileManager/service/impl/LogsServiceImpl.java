@@ -1,8 +1,8 @@
 package com.fileManager.service.impl;
 
-import com.fileManager.pojo.Logs;
+import com.fileManager.entity.Logs;
 import com.fileManager.mapper.LogsMapper;
-import com.fileManager.service.LogsService;
+import com.fileManager.service.ILogsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2024-12-10
  */
 @Service
-public class LogsServiceImpl extends ServiceImpl<LogsMapper, Logs> implements LogsService {
+public class LogsServiceImpl extends ServiceImpl<LogsMapper, Logs> implements ILogsService {
 
 }

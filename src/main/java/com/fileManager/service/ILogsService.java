@@ -1,6 +1,6 @@
 package com.fileManager.service;
 
-import com.fileManager.pojo.Folders;
+import com.fileManager.entity.Logs;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author zhangmy
  * @since 2024-12-10
  */
-public interface FoldersService extends IService<Folders> {
+public interface ILogsService extends IService<Logs> {
 
 }
