@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fileManager.entity.Files;
 import com.fileManager.vo.FileStats;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,12 +20,13 @@ import java.util.List;
  */
 @Mapper
 public interface FilesMapper extends BaseMapper<Files> {
-    // 获取文件树形结构
-    List<Files> getFileTree(@Param("userId") Long userId);
+
 
     // 获取文件数量和总大小
-    FileStats getFileStats(@Param("userId") Long userId);
-
-    // 根据文件名查找文件列表
-    List<Files> searchFilesByName(@Param("name") String fileName);
+    @Select("SELECT COUNT(*) AS totalCount, SUM(file_size) AS totalSize " +
+            "FROM files WHERE uploaded_by = #{userId}")
+    FileStats getFileStats(@Param("userId") String userId);
+    // 根据文件名进行模糊搜索
+    @Select("SELECT * FROM files WHERE file_name LIKE CONCAT('%', #{fileName}, '%')")
+    List<Files> searchFilesByName(@Param("fileName") String fileName);
 }

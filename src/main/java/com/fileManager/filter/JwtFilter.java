@@ -1,18 +1,18 @@
 package com.fileManager.filter;
 
 import com.fileManager.util.JwtUtil;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import com.fileManager.util.UserContext;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component
-public class JwtFilter extends OncePerRequestFilter {
+@Order(2)  // 设置为较晚执行，确保 CORS 先处理
+public class JwtFilter implements Filter {
 
     private final JwtUtil jwtUtil;
 
@@ -21,28 +21,47 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws java.io.IOException, javax.servlet.ServletException {
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        System.out.println("JWT 过滤器生效");
+        // 获取当前请求的路径
+        String path = request.getRequestURI();
+
+        // 排除登录和注册接口
+        if (path.contains("/auth/")) {
+            //放行
+            chain.doFilter(request, response);
+            return;
+        }
 
         String authHeader = request.getHeader("Authorization");
 
-        // 检查 Authorization 头是否存在并且以 "Bearer " 开头
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7); // 提取 Token
-            if (jwtUtil.validateToken(token)) { // 验证 Token 的合法性
-                String username = jwtUtil.getUsernameFromToken(token);
-
-                // 创建 UsernamePasswordAuthenticationToken
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(username, null, null);
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                // 设置到 Spring Security 上下文
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = authHeader.substring(7);
+            if (jwtUtil.validateToken(token)) {
+                String userId = jwtUtil.getUserIdFromToken(token);
+                UserContext.setCurrentUser(userId);
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Invalid or expired token");
+                return;
             }
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Authorization header missing");
+            return;
         }
 
-        // 继续处理请求
         chain.doFilter(request, response);
+    }
+
+    @Override
+    public void destroy() {
     }
 }

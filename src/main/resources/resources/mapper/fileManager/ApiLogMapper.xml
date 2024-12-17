@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fileManager.mapper.ApiLogMapper">
+
+<!--    <select id="selectLogsBySearch" resultType="com.fileManager.entity.ApiLog">-->
+<!--        SELECT * FROM api_logs-->
+<!--        <where>-->
+<!--            <if test="search != null and search != ''">-->
+<!--                AND (-->
+<!--                username LIKE CONCAT('%', #{search}, '%')-->
+<!--                OR ip LIKE CONCAT('%', #{search}, '%')-->
+<!--                OR url LIKE CONCAT('%', #{search}, '%')-->
+<!--                OR method LIKE CONCAT('%', #{search}, '%')-->
+<!--                OR params LIKE CONCAT('%', #{search}, '%')-->
+<!--                OR result LIKE CONCAT('%', #{search}, '%')-->
+<!--                OR error LIKE CONCAT('%', #{search}, '%')-->
+<!--                )-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        ORDER BY created_at DESC-->
+<!--        LIMIT #{page.size} OFFSET #{page.current}-->
+<!--    </select>-->
+
+</mapper>

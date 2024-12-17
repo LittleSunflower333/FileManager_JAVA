@@ -5,6 +5,7 @@ import com.fileManager.entity.Users;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -16,16 +17,17 @@ import java.util.List;
  */
 public interface IUsersService extends IService<Users> {
     // 分页查找用户信息
-    IPage<Users> getUserList(int page, int size);
+    IPage<Map<String, Object>> getUserList(int page, int size);
 
     // 增加用户
-    boolean addUser(Users user);
+    String addUser(Users user);
 
     // 批量删除用户
-    boolean deleteUsers(List<Long> ids);
+    boolean deleteUsers(List<String> ids);
 
     // 修改用户信息
     boolean updateUser(Users user);
+    Users getUserByUsernameAndPwd(String username,String pwd,boolean isSafe);
     Users getUserByUsername(String username);
-    public Users getUserById(Long id);
+    public Users getUserById(String id);
 }
