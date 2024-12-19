@@ -6,6 +6,7 @@ import com.fileManager.util.ApiResponse;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,6 +38,20 @@ public class ApiLogController {
 
         // 返回分页结果
         return ApiResponse.success(resultPage);
+    }
+
+    @PostMapping("/import")
+    public String importLogs(@RequestParam("file") MultipartFile file, @RequestParam("isSafe") boolean isSafe) {
+        try {
+            List<ApiLog> logs = apiLogService.importLogsFromXml(file, isSafe);
+            return "Logs imported successfully: " + logs.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (!isSafe) {
+                return "Error: Potential XXE attack detected. " + e.getMessage();
+            }
+            return "Log import failed: " + e.getMessage();
+        }
     }
 
 }

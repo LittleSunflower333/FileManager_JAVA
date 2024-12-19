@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("api_logs")
 public class ApiLog {
-    @TableId(type = IdType.AUTO)
+//    @TableId(type = IdType.AUTO)
     private Long id;
     private String method;         // 方法名
     private String url;            // 请求URL

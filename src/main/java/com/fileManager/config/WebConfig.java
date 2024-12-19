@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fileManager.filter.SameSiteFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -24,16 +26,17 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8080")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
+                .allowedOrigins("http://localhost:8080", "http://172.18.0.2:8081") // 允许的来源
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 允许的请求方法
+                .allowedHeaders("Content-Type", "Authorization", "x-is-safe", "*") // 允许的自定义请求头
                 .exposedHeaders("Content-Disposition") // 显式暴露 Content-Disposition 响应头
-                .allowCredentials(true);
+                .allowCredentials(true); // 允许携带 Cookie 等认证信息
     }
     @Override
     public void configurePathMatch(PathMatchConfigurer pathMatchConfigurer) {
 
     }
+
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer contentNegotiationConfigurer) {

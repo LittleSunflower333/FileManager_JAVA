@@ -43,7 +43,7 @@ public class ApiLogAspect {
         String url = request.getRequestURL().toString();
 
         // 排除 ApiLogController 中的 /list 接口
-        if (url.contains("/apiLog/list")) {
+        if (url.contains("/apiLog/")) {
             // 如果是该接口，不记录日志，直接执行目标方法
             return joinPoint.proceed();
         }

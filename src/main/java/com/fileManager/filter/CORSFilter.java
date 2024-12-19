@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@Order(1)  // 设置为最先执行
+@Order(1)  // 设置为最先执行,OPTIONS 请求不需要验证
 public class CORSFilter implements Filter {
 
     @Override
@@ -24,7 +24,7 @@ public class CORSFilter implements Filter {
         System.out.println("CORS 过滤器生效");
 
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, x-is-safe");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Credentials", "true");
 

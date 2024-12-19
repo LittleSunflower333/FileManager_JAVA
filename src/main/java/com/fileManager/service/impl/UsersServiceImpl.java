@@ -34,7 +34,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     public IPage<Map<String, Object>> getUserList(int page, int size) {
         IPage<Map<String, Object>> userMapsPage = usersMapper.selectMapsPage(
                 new Page<>(page, size),
-                new QueryWrapper<Users>().select("id", "username", "email", "createdAt", "updatedAt", "status")
+                new QueryWrapper<Users>().select("id", "username", "email", "created_at", "updated_at", "status")
         );
         return userMapsPage;
     }
@@ -56,6 +56,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     // 修改用户信息
     @Override
     public boolean updateUser(Users user) {
+        user.setPassword(PasswordUtil.encode(user.getPassword()));
         return this.updateById(user) ;
     }
     @Override

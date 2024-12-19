@@ -50,9 +50,9 @@ public class FilesController {
      */
     @PostMapping("/add")
     public ResponseEntity<?> addFile(@RequestParam("file") MultipartFile file,
-                                     @RequestParam("folderId") String folderId) {
+                                     @RequestParam("folderId") String folderId,@RequestParam("isSafe") boolean isSafe) {
         try{
-            boolean result = filesService.addFile(file, folderId);
+            boolean result = filesService.addFile(file, folderId,isSafe);
             return result
                     ? ResponseEntity.ok("File added successfully")
                     : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add file");

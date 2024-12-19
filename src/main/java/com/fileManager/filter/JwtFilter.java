@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@Order(2)  // 设置为较晚执行，确保 CORS 先处理
+@Order(3)  // 设置为较晚执行，确保 CORS 先处理
 public class JwtFilter implements Filter {
 
     private final JwtUtil jwtUtil;
@@ -34,7 +34,7 @@ public class JwtFilter implements Filter {
         String path = request.getRequestURI();
 
         // 排除登录和注册接口
-        if (path.contains("/auth/")) {
+        if (path.contains("/auth/")||path.contains("hello")) {
             //放行
             chain.doFilter(request, response);
             return;

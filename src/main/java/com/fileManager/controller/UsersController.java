@@ -26,6 +26,10 @@ public class UsersController {
     @Autowired
     private IUsersService usersService;
 
+    @GetMapping("/hello")
+    public ResponseEntity<?> getHello() {
+        return ResponseEntity.ok("hello");
+    }
     // 分页查找用户信息
     @GetMapping("/list")
     public ResponseEntity<?> getUserList(
