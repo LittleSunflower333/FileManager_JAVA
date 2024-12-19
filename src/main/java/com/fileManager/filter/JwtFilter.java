@@ -34,7 +34,7 @@ public class JwtFilter implements Filter {
         String path = request.getRequestURI();
 
         // 排除登录和注册接口
-        if (path.contains("/auth/")) {
+        if (path.contains("/auth/")||path.contains("hello")) {
             //放行
             chain.doFilter(request, response);
             return;

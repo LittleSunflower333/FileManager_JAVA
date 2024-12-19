@@ -6,6 +6,7 @@ import com.fileManager.util.ApiResponse;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,6 +38,18 @@ public class ApiLogController {
 
         // 返回分页结果
         return ApiResponse.success(resultPage);
+    }
+
+    // 导入 XML 日志
+    @PostMapping("/import")
+    public String importLogs(@RequestParam("file") MultipartFile file,@RequestParam("isSafe") boolean isSafe) {
+        try {
+            apiLogService.importLogsFromXml(file,isSafe);
+            return "日志导入成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "日志导入失败：" + e.getMessage();
+        }
     }
 
 }

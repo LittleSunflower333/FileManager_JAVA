@@ -34,7 +34,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     public IPage<Map<String, Object>> getUserList(int page, int size) {
         IPage<Map<String, Object>> userMapsPage = usersMapper.selectMapsPage(
                 new Page<>(page, size),
-                new QueryWrapper<Users>().select("id", "username", "email", "createdAt", "updatedAt", "status")
+                new QueryWrapper<Users>().select("id", "username", "email", "created_at", "updated_at", "status")
         );
         return userMapsPage;
     }
